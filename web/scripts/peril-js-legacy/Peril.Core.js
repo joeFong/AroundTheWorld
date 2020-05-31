@@ -57,8 +57,6 @@ AudioClass.prototype.setOutput = function(args){
 
 var testClass = function(){
 	this.test1 = "hello";
-	console.log(this);
-
 }
 
 var testClass2 = function(){
@@ -69,7 +67,6 @@ var testClass2 = function(){
 
 var testClass2 = function(){
 	this.prototype = new testClass();
-	console.log(this.prototype.test1);
 }
 
 var test1 = new testClass2();
