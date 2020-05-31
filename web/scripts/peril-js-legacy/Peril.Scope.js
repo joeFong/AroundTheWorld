@@ -1,44 +1,44 @@
-// Peril.js 
+// Peril.js
 // Library for Web Audio API
 // Developed by Min Nam
 // jabuem.co
 
-var Scope = function(){
+var Scope = function(context){
 	var container, bar, scope;
 	var x1, y1, x2, y2, selected = null;
 	var analyser, noDataPoints, freqData;
 
 	var initElements = function(){
-		container = document.createElement("div");	
-		container.style.width = "250px";
-		container.style.height = "150px";
+		container = document.createElement("div");
+		container.style.width = "100px";
+		container.style.height = "100px";
 		// container.style.background = "white";
 		// container.style.border = "1px solid grey"
 		container.style.color = "black";
 		container.style.position = "absolute";
 		container.style.top = 0;
 		document.body.appendChild(container);
-		
-		bar = document.createElement("div");	
-		bar.style.width = "100%";	
+
+		bar = document.createElement("div");
+		bar.style.width = "100%";
 		bar.style.height = "5%";
 		// bar.style.background = "grey";
 		// bar.style.borderBottom = "1px solid grey"
 		bar.style.color = "black";
 		container.appendChild(bar);
-		
+
 		bar.onmousedown = function(e){
 			selected = container;
 			x1 = x2 - container.offsetLeft;
 			y1 = y2 - container.offsetTop;
 		}
 
-		document.onmouseup = function(e){		
-			selected = null;		
+		document.onmouseup = function(e){
+			selected = null;
 		}
 
 		document.onmousemove = function(e){
-			x2 = document.all ? window.event.clientX : e.pageX;		
+			x2 = document.all ? window.event.clientX : e.pageX;
 	    	y2 = document.all ? window.event.clientY : e.pageY;
 			if(selected != null){
 				var posX = x2 - x1;
@@ -49,14 +49,14 @@ var Scope = function(){
 				}else{
 					container.style.left = '0px';
 				}
-		    	
+
 		    	if(  posY >= 0){
 					container.style.top = (y2 - y1) + 'px';
 				}else{
 					container.style.top =  '0px';
-				}		    	
-		        
-			}		
+				}
+
+			}
 		}
 	}
 	initElements();
@@ -64,11 +64,11 @@ var Scope = function(){
 	var HEIGHT, WIDTH, ctx, ghostcanvas, gctx;
 	var initCanvas = function(){
 		scope = document.createElement("canvas");
-		scope.style.height = "95%";
+		scope.style.height = "100%";
 		scope.style.width  = "100%";
 		container.appendChild(scope);
 
-		
+
 	  	HEIGHT = scope.height;
 	  	WIDTH = scope.width;
 	  	ctx = scope.getContext('2d');
@@ -77,10 +77,9 @@ var Scope = function(){
 	  	ghostcanvas.width = WIDTH;
 	  	gctx = ghostcanvas.getContext('2d');
 
-	  	analyser = AC.createAnalyser();
-		
+	  	analyser = (context || AC).createAnalyser();
 
-		
+
 		freqData = new Uint8Array(analyser.frequencyBinCount);
 
 	  	// scope.onselectstart = function () { return false; }
@@ -90,19 +89,19 @@ var Scope = function(){
 
 	var clear = function(){
 		ctx.clearRect(0, 0, WIDTH, HEIGHT);
-		ctx.beginPath();
-		ctx.strokeStyle = "rgb(150,150,150)";		
-		ctx.moveTo(0, 0.5);
-		ctx.lineTo(500, 0.5);
-		ctx.moveTo(0, HEIGHT / 4);
-		ctx.lineTo(500, HEIGHT / 4);
-		ctx.moveTo(0, HEIGHT / 2 - 0.5);
-		ctx.lineTo(500, HEIGHT / 2 - 0.5);
-		ctx.moveTo(0, HEIGHT * 0.75 );
-		ctx.lineTo(500, HEIGHT * 0.75);
-		ctx.moveTo(0, HEIGHT - 0.5 );
-		ctx.lineTo(500, HEIGHT - 0.5);
-		ctx.lineWidth = 1;
+		// ctx.beginPath();
+		// ctx.strokeStyle = "rgb(150,150,150)";
+		// ctx.moveTo(0, 0.5);
+		// ctx.lineTo(500, 0.5);
+		// ctx.moveTo(0, HEIGHT / 4);
+		// ctx.lineTo(500, HEIGHT / 4);
+		// ctx.moveTo(0, HEIGHT / 2 - 0.5);
+		// ctx.lineTo(500, HEIGHT / 2 - 0.5);
+		// ctx.moveTo(0, HEIGHT * 0.75 );
+		// ctx.lineTo(500, HEIGHT * 0.75);
+		// ctx.moveTo(0, HEIGHT - 0.5 );
+		// ctx.lineTo(500, HEIGHT - 0.5);
+		// ctx.lineWidth = 1;
 		ctx.stroke();
 	}
 
@@ -117,31 +116,36 @@ var Scope = function(){
 		now = Date.now();
 		delta = now - then;
 		//console.log(delta);
-		
+
 		if (delta > interval) {
 			clear();
 			analyser.getByteTimeDomainData(freqData);
 			then = now - (delta % interval);
-		
+
 			ctx.lineJoin = 'round';
-			ctx.beginPath();		
-			ctx.strokeStyle = "rgb(30,30,30)";
+			ctx.beginPath();
+			ctx.strokeStyle = "white";
+			ctx.fillStyle = "white";
+			ctx.lineWidth = 2;
 			var ycc = (freqData[0] / 128) * (HEIGHT / 2);
 			var xcc = 0;
-			for (var i = 1; i < freqData.length * 2; i += 0.5) {
-				    
-			    var xc = i;
-	      		var yc = (freqData[i] / 128) * (HEIGHT / 2);
-	      		
-	      		ctx.moveTo(xcc, ycc);
-	  			ctx.lineTo(xc, yc);
-	  			// ctx.fillRect(xc,yc,2,2);
-	  			xcc = i - 1;
-	  			ycc = (freqData[i] / 128) * (HEIGHT / 2);
-	  			ctx.lineWidth = 1.5;
+			// for (var i = 1; i < freqData.length * 2; i += 10) {
+
+			//     var xc = i;
+			// 		var yc = (freqData[i] / 128) * (HEIGHT / 2);
+
+			// 		ctx.rect(xc, yc);
+
+	  	// 		ctx.lineWidth = 2;
+			// }
+
+			for (var i = 0; i < 5; i ++) {
+				let rectHeight = (freqData[parseInt((freqData.length/5) * i)] / 128 * (HEIGHT / 2) )
+				ctx.rect(i ? (WIDTH / 5) * i : 0, rectHeight / 2, (WIDTH / 5) - 20, rectHeight / 2)
 			}
 
 			ctx.stroke();
+			ctx.fill();
 		}
 
 	}

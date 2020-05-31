@@ -51,7 +51,7 @@ function gotStream(stream) {
     // Refresh button list in case labels have become available
     return navigator.mediaDevices.enumerateDevices();
 }
-  
+
 
 function gotDevices(deviceInfos) {
     // Handles being called several times to update labels. Preserve values.
@@ -101,17 +101,23 @@ function handleSuccess(stream) {
     window.stream = stream; // make variable available to browser console
     const audioTracks = stream.getAudioTracks();
 
+    var scope1 = new Scope(window.audioContext)
+    // scope1.connect(window.audioContext.destination)
+
+    this.mic = window.audioContext.createMediaStreamSource(stream)
+    this.mic.connect(scope1)
+
     const soundMeter = window.soundMeter = new SoundMeter(window.audioContext);
 
-    window.audioContext.resume() 
+    window.audioContext.resume()
     soundMeter.connectToSource(stream, function(e) {
         if (e) {
           alert(e);
           return;
         }
-        // setInterval(() => {
-        //     console.log(soundMeter.instant.toFixed(2), soundMeter.clip, soundMeter.slow);
-        // }, 200);
+        setInterval(() => {
+            console.log(soundMeter.instant.toFixed(2), soundMeter.clip, soundMeter.slow);
+        }, 200);
     });
     audio.srcObject = stream;
     console.log('Got stream with constraints:', constraints);

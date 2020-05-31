@@ -83,7 +83,6 @@ const Earth = {
                 }
             })
 
-
             requestAnimationFrame(animate);
         });
     }

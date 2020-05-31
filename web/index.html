@@ -22,7 +22,7 @@
     <body>
       <div id="earth_div"></div>
 
-      <audio id="gum-local" class="select" controls autoplay></audio>
+      <audio id="gum-local" class="select" controls autoplay style='display: none;'></audio>
 
       <h1 class="mainHeader">
         <i class='rotate'>A</i>
@@ -62,7 +62,7 @@
           <select id="audioOutput">
             <option value="" disabled selected>Audio Output source</option>
           </select>
-        </div>  
+        </div>
       </div>
 
       <script src="http://www.webglearth.com/v2/api.js"></script>
@@ -73,5 +73,13 @@
       <script src="./scripts/main/socket.io.js"></script>
       <script src="./scripts/main/socket.io.helper.js"></script>
       <script src="./scripts/main/main.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Core.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Amplitude.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Constant.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Oscillator.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Filter.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Envelope.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Util.js"></script>
+      <script src="./scripts/peril-js-legacy/Peril.Scope.js"></script>
   </body>
 </html>
