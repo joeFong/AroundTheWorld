@@ -46,10 +46,19 @@
 
           <i class='rotate-4'>Live ASMR Streaming Service</i>
         </h1>
+        <button id='stream-button'></button>
         <div id='nav'>
-          <button><i class="material-icons">keyboard_arrow_left</i></button>
+          <h2 id='playhead-tags'>
+            <a>#city</a>
+            <a>#cafe</a>
+          </h2>
           <h2 id='playhead-info'>New York</h2>
-          <button><i class="material-icons">keyboard_arrow_right</i></button>
+          <div id='playhead-buttons'>
+            <button class='playhead-buttons'><i class="material-icons">keyboard_arrow_left</i></button>
+            <button  class='playhead-buttons' id='playhead-play' onClick='Earth.play()' style='display: none;'><i class="material-icons">play_arrow</i></button>
+            <button  class='playhead-buttons' id='playhead-pause' onClick='Earth.stop()'><i class="material-icons">pause</i></button>
+            <button class='playhead-buttons'><i class="material-icons">keyboard_arrow_right</i></button>
+          </div>
         </div>
       </div>
 

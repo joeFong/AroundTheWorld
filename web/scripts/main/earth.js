@@ -74,6 +74,8 @@ const data = [
 var currentBegin = 0;
 var currentEnd = 5;
 
+let animation = null
+let increment = null
 const Earth = {
     createGlobe: () => {
         var earth = new WE.map('earth_div');
@@ -90,8 +92,9 @@ const Earth = {
         let pointer = 0;
         const playHeadInfo = document.getElementById('playhead-info')
 
-        let currentMarkers = []; 
-        const increment = () => {
+        let currentMarkers = [];
+
+        increment = () => {
 
             i = (i + 1) % data.length
 
@@ -123,7 +126,7 @@ const Earth = {
 
                 cities.map((dat, key) => {
                     var marker = WE.marker([dat.lat, dat.lon], './assets/Ellipse.png', 14, 14).addTo(earth)
-                    marker.bindPopup(`<h2 id='marker-${key}'>${dat.city}</h2>`, { maxWidth: 150, closeButton: false }).openPopup()
+                    marker.bindPopup(`<h2 id='marker-${key}'>${dat.city} #${1000 + key}</h2>`, { maxWidth: 150, closeButton: false }).openPopup()
                     currentMarkers.push(marker);
                 })
             }
@@ -140,7 +143,7 @@ const Earth = {
                     var pointerMarkerEl = currentMarkers[pointer].element;
                     var markerElLabel = $(markerEl).find('h2')[0].innerText;
                     var pointerMarkerLabel = $(pointerMarkerEl).find('h2')[0].innerText;
-                    
+
                     if(markerElLabel === pointerMarkerLabel) {
                         markerEl.style.filter = 'grayscale(0)'
                         markerEl.style.opacity = 1
@@ -156,12 +159,12 @@ const Earth = {
                         markerEl.style.marginLeft = '-4px'
                     }
                 })
-                
+
                 pointer++;
             }, 250)
         }
 
-        setInterval(increment, 10000)
+        animation = setInterval(increment, 10000)
         increment()
         earth.setView([data[0].lat, data[0].lon], 4.5);
 
@@ -198,5 +201,15 @@ const Earth = {
 
             requestAnimationFrame(animate);
         });
-    }
+    },
+    stop: () => {
+        clearInterval(animation)
+        $('#playhead-play').show();
+        $('#playhead-pause').hide();
+    },
+    play: () => {
+        animation = setInterval(increment, 10000)
+        $('#playhead-pause').show();
+        $('#playhead-play').hide();
+    },
 }
