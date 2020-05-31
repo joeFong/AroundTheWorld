@@ -148,7 +148,6 @@ const Earth = {
                     }
                 })
 
-                console.log(cities, playHeadInfo.innerText);
                 pointer++;
             }, 250)
         }
@@ -188,7 +187,7 @@ const Earth = {
                 }
             })
 
-            requestAnimationFrame(animate);
+            // requestAnimationFrame(animate);
         });
     }
 }

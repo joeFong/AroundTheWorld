@@ -37,7 +37,6 @@ function attachSinkId(element, sinkId) {
             if (error.name === 'SecurityError') {
               errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
             }
-            console.error(errorMessage);
             // Jump back to first output device in the list as it's the default.
             audioOutputSelect.selectedIndex = 0;
           });
