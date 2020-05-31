@@ -101,15 +101,6 @@ const Earth = {
                 currentEnd = 5;
             }
 
-            if(!cities.length) {
-                cities = data.slice(0, 5);
-                cities.map((dat, key) => {
-                    var marker = WE.marker([dat.lat, dat.lon], './assets/Ellipse.png', 14, 14).addTo(earth)
-                    marker.bindPopup(`<h2 id='marker-${key}'>${dat.city}</h2>`, { maxWidth: 150, closeButton: false }).openPopup()
-                    currentMarkers.push(marker);
-                })
-            }
-
             if(count++ % 3 === 0) {
                 currentBegin = i
                 currentEnd = i + 5;
@@ -156,13 +147,14 @@ const Earth = {
                         markerEl.style.marginLeft = '-4px'
                     }
                 })
-                
+
+                console.log(cities, playHeadInfo.innerText);
                 pointer++;
             }, 250)
         }
 
         setInterval(increment, 10000)
-        increment()
+        
         earth.setView([data[0].lat, data[0].lon], 4.5);
 
         var before = null;
