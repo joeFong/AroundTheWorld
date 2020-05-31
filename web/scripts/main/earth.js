@@ -86,7 +86,9 @@ const Earth = {
         }).addTo(earth);
 
         let i = 0
-        let count = 1;
+        let count = 0;
+        let pointer = 0;
+        const playHeadInfo = document.getElementById('playhead-info')
 
         let currentMarkers = []; 
         const increment = () => {
@@ -94,7 +96,7 @@ const Earth = {
             i = (i + 1) % data.length
 
             if(count >= cities.length) {
-                count = 1;
+                count = 0;
                 currentBegin = 0;
                 currentEnd = 5;
             }
@@ -125,12 +127,41 @@ const Earth = {
                     currentMarkers.push(marker);
                 })
             }
+
             setTimeout(() => {
-                earth.panTo([ data[i].lat, data[i].lon ])
+                if(pointer % 3 === 0) {
+                    pointer = 0;
+                }
+
+                currentMarkers.map((marker, key) => {
+                    var markerEl = marker.element;
+                    var pointerMarkerEl = currentMarkers[pointer].element;
+                    var markerElLabel = $(markerEl).find('h2')[0].innerText;
+                    var pointerMarkerLabel = $(pointerMarkerEl).find('h2')[0].innerText;
+                    
+                    if(markerElLabel === pointerMarkerLabel) {
+                        markerEl.style.filter = 'grayscale(0)'
+                        markerEl.style.opacity = 1
+                        markerEl.style.width = '12px'
+                        markerEl.style.height = '12px'
+                        markerEl.style.marginLeft = '-6px'
+                        playHeadInfo.innerText = $(markerEl).find('h2')[0].innerText
+                    } else {
+                        markerEl.style.filter = 'grayscale(100%)'
+                        markerEl.style.opacity = 0.5
+                        markerEl.style.width = '8px'
+                        markerEl.style.height = '8px'
+                        markerEl.style.marginLeft = '-4px'
+                    }
+                })
+                
+
+                earth.panTo([ cities[pointer].lat, cities[pointer].lon ])
+                pointer++;
             }, 300)
         }
 
-        setInterval(increment, 10000)
+        setInterval(increment, 5000)
         increment()
         earth.setView([data[0].lat, data[0].lon], 4.5);
 
@@ -145,26 +176,23 @@ const Earth = {
             cities.map(({ city, lat, lon }, key) => {
                 const near = [lat/c[0], lon/c[1]]
                 const markerText = document.getElementById(`marker-${key}`)
-
                 if (markerText) {
-                    const markerParent = markerText.parentNode.parentNode.parentNode.parentNode
-
-                    if ((near[0] <= 1.1 && near[0] >= 0.7) && (near[1] <= 1.1 && near[1] >= 0.7)) {
-                        markerParent.firstElementChild.style.filter = 'grayscale(0)'
-                        markerParent.firstElementChild.style.opacity = 1
-                        markerParent.firstElementChild.style.width = '12px'
-                        markerParent.firstElementChild.style.height = '12px'
-                        markerParent.firstElementChild.style.marginLeft = '-6px'
-                        playHeadInfo.innerText = city
-
-                    } else {
-                        markerParent.firstElementChild.style.filter = 'grayscale(100%)'
-                        markerParent.firstElementChild.style.opacity = 0.5
-                        markerParent.firstElementChild.style.width = '8px'
-                        markerParent.firstElementChild.style.height = '8px'
-                        markerParent.firstElementChild.style.marginLeft = '-4px'
-                        playHeadInfo.innerText = ''
-                    }
+                    // const markerParent = markerText.parentNode.parentNode.parentNode.parentNode
+                    // if ((near[0] <= 1.1 && near[0] >= 0.7) && (near[1] <= 1.1 && near[1] >= 0.7)) {
+                    //     markerParent.firstElementChild.style.filter = 'grayscale(0)'
+                    //     markerParent.firstElementChild.style.opacity = 1
+                    //     markerParent.firstElementChild.style.width = '12px'
+                    //     markerParent.firstElementChild.style.height = '12px'
+                    //     markerParent.firstElementChild.style.marginLeft = '-6px'
+                    //     playHeadInfo.innerText = city
+                    // } else {
+                    //     markerParent.firstElementChild.style.filter = 'grayscale(100%)'
+                    //     markerParent.firstElementChild.style.opacity = 0.5
+                    //     markerParent.firstElementChild.style.width = '8px'
+                    //     markerParent.firstElementChild.style.height = '8px'
+                    //     markerParent.firstElementChild.style.marginLeft = '-4px'
+                    //     playHeadInfo.innerText = ''
+                    // }
                 }
             })
 
