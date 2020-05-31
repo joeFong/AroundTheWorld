@@ -52,32 +52,7 @@ const data = [
         lat: 59.3293,
         lon: 18.0686,
         url: new Simpler('http://localhost:4000/sound/9.mp3', 1, 1, false)
-    },
-    {
-        city: 'Rio de Janeiro',
-        lat: 22.9068,
-        lon: 43.1729
-    },
-    {
-        city: 'Mexico City',
-        lat: 19.4326,
-        lon: 99.1332
-    },
-    {
-        city: 'Panama City',
-        lat: 8.9824,
-        lon: 79.5199
-    },
-    {
-        city: 'Budapest',
-        lat: 47.4979,
-        lon: 19.0402
-    },
-    {
-        city: 'Cope Town',
-        lat: 33.9249,
-        lon: 18.4241
-    },
+    }
 ];
 
 var currentBegin = 0;
@@ -172,8 +147,11 @@ const Earth = {
             }, 250)
         }
 
+        setTimeout(() => {
+            increment()
+        }, 1500)
         animation = setInterval(increment, 10000)
-        earth.setView([data[0].lat, data[0].lon], 4.5);
+        earth.setView([data[0].lat, data[0].lon], 2.5);
 
         var before = null;
 
