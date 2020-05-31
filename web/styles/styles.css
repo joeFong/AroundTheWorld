@@ -1,0 +1,176 @@
+html, body{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#earth_div{
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color:rgba(49, 49, 65, 1);
+    position: absolute !important;
+}
+
+.audioDevices {
+    position: fixed;
+    width: 100%;
+    bottom: 120px;
+    z-index: 1000;
+}
+
+.micAudio {
+    float: left;
+    margin-top: 12px;
+    margin-right: 8px;
+}
+
+.select {
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.select select {
+    margin-top: 12px;
+}
+
+.selectInput {
+    top: 15px;
+    left: 15px;
+    position: absolute !important;
+}
+
+.selectOutput {
+    top: 60px;
+    left: 15px;
+    position: absolute !important;
+}
+
+.select-wrapper {
+    float: right;
+}
+
+.select-wrapper input.select-dropdown {
+    margin: 0 0 0px 0;
+}
+
+.select-dropdown {
+    color: #9e9e9e;
+}
+.select-wrapper .caret {
+    fill: rgba(255,255,255,0.87) !important;
+}
+
+.mainHeader {
+    font-family: Raleway;
+    font-weight: 100;
+    position: fixed;
+    z-index: 1000;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    font-size: 40px;
+    left: 20%;
+    top: 10%;
+    width: 260px;
+    height: 200px;
+}
+
+i {
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.rotate {
+position: absolute;
+transform: rotate(22.5deg);
+font-style: normal;
+}
+
+.rotate-2 {
+position: absolute;
+transform: rotate(22.5deg);
+font-style: normal;
+top: 60px;
+}
+
+.rotate-3 {
+position: absolute;
+transform: rotate(22.5deg);
+font-style: normal;
+top: 120px;
+}
+
+.rotate-4 {
+position: absolute;
+font-style: normal;
+top: 180px;
+font-size: 8px;
+letter-spacing: 3px;
+}
+
+.rotate:hover, .rotate-2:hover, .rotate-3:hover {
+transform: rotate(0deg);
+transition: .5s all ease-in-out;
+cursor: default;
+}
+
+
+h2 {
+    font-family: Raleway;
+    color: white;
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 4px;
+}
+
+.we-pp {
+    opacity: 1 !important;
+    visibility: visible !important;
+    user-select: none;
+}
+
+.we-pp-wrapper {
+    background: none !important;
+    box-shadow: none!important;
+}
+
+.we-pp-content {
+    margin: 0 0 8px 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.we-pp-tip-cont {
+    display: none;
+}
+
+.we-pm-icon {
+    width: 8px;
+    height: 8px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: .5s all ease-in-out;
+}
+
+
+#nav {
+    position: fixed;
+    z-index: 1000;
+    bottom: 16%;
+    left: 50%;
+    min-width: 400px;
+    width: 50%;
+    transform: translateX(-50%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+#playhead-info {
+    font-size: 20px;
+}
