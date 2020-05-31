@@ -128,6 +128,8 @@ const Earth = {
                 })
             }
 
+            earth.panTo([ cities[pointer].lat, cities[pointer].lon ])
+
             setTimeout(() => {
                 if(pointer % 3 === 0) {
                     pointer = 0;
@@ -155,13 +157,11 @@ const Earth = {
                     }
                 })
                 
-
-                earth.panTo([ cities[pointer].lat, cities[pointer].lon ])
                 pointer++;
-            }, 300)
+            }, 250)
         }
 
-        setInterval(increment, 5000)
+        setInterval(increment, 10000)
         increment()
         earth.setView([data[0].lat, data[0].lon], 4.5);
 
