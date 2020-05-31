@@ -22,35 +22,38 @@
     <body>
       <div id="earth_div"></div>
 
-      <audio id="gum-local" class="select" controls autoplay style='display: none;'></audio>
+      <!-- <audio id="gum-local" class="select" controls autoplay style='display: none;'></audio> -->
 
-      <h1 class="mainHeader">
-        <i class='rotate'>A</i>
-        <i class='rotate' style='left: 45px;'>R</i>
-        <i class='rotate' style='left: 90px;'>O</i>
-        <i class='rotate' style='left: 135px;'>U</i>
-        <i class='rotate' style='left: 180px;'>N</i>
-        <i class='rotate' style='left: 225px;'>D</i>
+      <div class='nav'>
+        <h1 class="mainHeader">
+          <i class='rotate'>A</i>
+          <i class='rotate' style='left: 45px;'>R</i>
+          <i class='rotate' style='left: 90px;'>O</i>
+          <i class='rotate' style='left: 135px;'>U</i>
+          <i class='rotate' style='left: 180px;'>N</i>
+          <i class='rotate' style='left: 225px;'>D</i>
 
-        <i class='rotate-2' style='font-style: italic; transform: rotate(0);'>T</i>
-        <i class='rotate-2' style='left: 45px;'>H</i>
-        <i class='rotate-2' style='left: 90px;'>E</i>
+          <i class='rotate-2' style='font-style: italic; transform: rotate(0);'>T</i>
+          <i class='rotate-2' style='left: 45px;'>H</i>
+          <i class='rotate-2' style='left: 90px;'>E</i>
 
-        <i class='rotate-3' style='font-style: italic; transform: rotate(0);'>W</i>
-        <i class='rotate-3' style='left: 45px;'>O</i>
-        <i class='rotate-3' style='left: 90px;'>R</i>
-        <i class='rotate-3' style='left: 135px;'>L</i>
-        <i class='rotate-3' style='left: 180px;'>D</i>
+          <i class='rotate-3' style='font-style: italic; transform: rotate(0);'>W</i>
+          <i class='rotate-3' style='left: 45px;'>O</i>
+          <i class='rotate-3' style='left: 90px;'>R</i>
+          <i class='rotate-3' style='left: 135px;'>L</i>
+          <i class='rotate-3' style='left: 180px;'>D</i>
 
 
-        <i class='rotate-4'>Live ASMR Streaming Service</i>
-      </h1>
-      <div id='nav'>
-        <button>left</button>
-        <h2 id='playhead-info'>New York</h2>
-        <button>right</button>
+          <i class='rotate-4'>Live ASMR Streaming Service</i>
+        </h1>
+        <div id='nav'>
+          <button><i class="material-icons">keyboard_arrow_left</i></button>
+          <h2 id='playhead-info'>New York</h2>
+          <button><i class="material-icons">keyboard_arrow_right</i></button>
+        </div>
       </div>
-      <div class="audioDevices">
+
+      <!-- <div class="audioDevices">
         <div class="select selectInput">
           <i class="material-icons micAudio">mic</i>
           <select id="audioSource">
@@ -63,7 +66,7 @@
             <option value="" disabled selected>Audio Output source</option>
           </select>
         </div>
-      </div>
+      </div> -->
 
       <script src="http://www.webglearth.com/v2/api.js"></script>
       <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>

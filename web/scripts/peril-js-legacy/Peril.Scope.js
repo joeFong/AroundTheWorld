@@ -10,55 +10,14 @@ var Scope = function(context){
 
 	var initElements = function(){
 		container = document.createElement("div");
-		container.style.width = "100px";
-		container.style.height = "100px";
-		// container.style.background = "white";
-		// container.style.border = "1px solid grey"
+		container.style.width = "300px";
+		container.style.height = "300px";
 		container.style.color = "black";
 		container.style.position = "absolute";
 		container.style.top = 0;
 		document.body.appendChild(container);
-
-		bar = document.createElement("div");
-		bar.style.width = "100%";
-		bar.style.height = "5%";
-		// bar.style.background = "grey";
-		// bar.style.borderBottom = "1px solid grey"
-		bar.style.color = "black";
-		container.appendChild(bar);
-
-		bar.onmousedown = function(e){
-			selected = container;
-			x1 = x2 - container.offsetLeft;
-			y1 = y2 - container.offsetTop;
-		}
-
-		document.onmouseup = function(e){
-			selected = null;
-		}
-
-		document.onmousemove = function(e){
-			x2 = document.all ? window.event.clientX : e.pageX;
-	    	y2 = document.all ? window.event.clientY : e.pageY;
-			if(selected != null){
-				var posX = x2 - x1;
-				var posY = y2 - y1;
-
-				if(  posX >= 0){
-					container.style.left = (x2 - x1) + 'px';
-				}else{
-					container.style.left = '0px';
-				}
-
-		    	if(  posY >= 0){
-					container.style.top = (y2 - y1) + 'px';
-				}else{
-					container.style.top =  '0px';
-				}
-
-			}
-		}
 	}
+
 	initElements();
 
 	var HEIGHT, WIDTH, ctx, ghostcanvas, gctx;
@@ -68,40 +27,22 @@ var Scope = function(context){
 		scope.style.width  = "100%";
 		container.appendChild(scope);
 
+		HEIGHT = scope.height;
+		WIDTH = scope.width;
+		ctx = scope.getContext('2d');
+		ghostcanvas = document.createElement('canvas');
+		ghostcanvas.height = HEIGHT;
+		ghostcanvas.width = WIDTH;
+		gctx = ghostcanvas.getContext('2d');
 
-	  	HEIGHT = scope.height;
-	  	WIDTH = scope.width;
-	  	ctx = scope.getContext('2d');
-	  	ghostcanvas = document.createElement('canvas');
-	  	ghostcanvas.height = HEIGHT;
-	  	ghostcanvas.width = WIDTH;
-	  	gctx = ghostcanvas.getContext('2d');
-
-	  	analyser = (context || AC).createAnalyser();
-
-
+		analyser = (context || AC).createAnalyser();
 		freqData = new Uint8Array(analyser.frequencyBinCount);
 
-	  	// scope.onselectstart = function () { return false; }
-	  	draw();
-	  	// window.requestAnimationFrame(draw);
+		draw()
 	}
 
 	var clear = function(){
 		ctx.clearRect(0, 0, WIDTH, HEIGHT);
-		// ctx.beginPath();
-		// ctx.strokeStyle = "rgb(150,150,150)";
-		// ctx.moveTo(0, 0.5);
-		// ctx.lineTo(500, 0.5);
-		// ctx.moveTo(0, HEIGHT / 4);
-		// ctx.lineTo(500, HEIGHT / 4);
-		// ctx.moveTo(0, HEIGHT / 2 - 0.5);
-		// ctx.lineTo(500, HEIGHT / 2 - 0.5);
-		// ctx.moveTo(0, HEIGHT * 0.75 );
-		// ctx.lineTo(500, HEIGHT * 0.75);
-		// ctx.moveTo(0, HEIGHT - 0.5 );
-		// ctx.lineTo(500, HEIGHT - 0.5);
-		// ctx.lineWidth = 1;
 		ctx.stroke();
 	}
 
@@ -127,32 +68,18 @@ var Scope = function(context){
 			ctx.strokeStyle = "white";
 			ctx.fillStyle = "white";
 			ctx.lineWidth = 2;
-			var ycc = (freqData[0] / 128) * (HEIGHT / 2);
-			var xcc = 0;
-			// for (var i = 1; i < freqData.length * 2; i += 10) {
 
-			//     var xc = i;
-			// 		var yc = (freqData[i] / 128) * (HEIGHT / 2);
+			for (let i = 0; i < 5; i ++) {
+				const index = parseInt((freqData.length / 5 ) * i)
+				const rectHeight = ((1 - (freqData[index] / 128)) * HEIGHT)
 
-			// 		ctx.rect(xc, yc);
-
-	  	// 		ctx.lineWidth = 2;
-			// }
-
-			for (var i = 0; i < 5; i ++) {
-				let rectHeight = ((freqData[parseInt((freqData.length/5) * i)] / 128))
-
-				console.log(rectHeight)
-
-				ctx.rect(i ? (WIDTH / 5) * i : 0, rectHeight / 2, (WIDTH / 5) - 20, rectHeight / 2)
+				ctx.rect(i ? (WIDTH / 5) * i : 0, HEIGHT / 2 - rectHeight / 2, (WIDTH / 5), rectHeight)
+				ctx.fill();
 			}
 
-			ctx.stroke();
-			ctx.fill();
 		}
 
 	}
-
 
 	initCanvas();
 	return analyser;

@@ -62,10 +62,16 @@ html, body{
     fill: rgba(255,255,255,0.87) !important;
 }
 
+.nav {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
+}
+
 .mainHeader {
     font-family: Raleway;
     font-weight: 100;
-    position: fixed;
+    position: absolute;
     z-index: 1000;
     font-family: 'Open Sans', sans-serif;
     color: white;
@@ -159,7 +165,6 @@ h2 {
 
 
 #nav {
-    position: fixed;
     z-index: 1000;
     bottom: 16%;
     left: 50%;
@@ -173,4 +178,12 @@ h2 {
 
 #playhead-info {
     font-size: 20px;
+}
+
+button {
+    background: none;
+    box-shadow: none;
+    outline: none;
+    border: none;
+    color: white;
 }
