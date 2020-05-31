@@ -1,152 +1,41 @@
 <!DOCTYPE HTML>
 <html>
   <head>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">\
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&family=Raleway:wght@100&display=swap" rel="stylesheet">
-    <script src="http://www.webglearth.com/v2/api.js"></script>
-    <script>
-      const data = [
-        {
-          city: 'New York',
-          lat: 40.7128,
-          lon: 74.0060
-        },
-        {
-          city: 'Seoul',
-          lat: 37.5665,
-          lon: 126.9780
-        },
-      ]
-    </script>
-    <script>
-      function initialize() {
-        var options = { center: [0, 0], zoom: 2};
-        var earth = new WE.map('earth_div', options);
-        earth.setView([46.8011, 8.2266], 2);
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-        WE.tileLayer('https://api.maptiler.com/maps/88a761b9-cca7-40a1-9d1a-cce662408371/{z}/{x}/{y}.png?key=J16kC7Zjej5UcrO1DsLF', {
-          minZoom: 0,
-          maxZoom: 5,
-          attribution: 'NASA'
-        }).addTo(earth);
+    <script
+       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+       integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+       crossorigin="anonymous">
+     </script>
 
-        data.map((dat) => {
-
-          var marker = WE.marker([dat.lat, dat.lon], 'file:///C:/Users/hi/Documents/Workspace/AroundTheWorld/web/assets/Ellipse%201.png', 14, 14).addTo(earth)
-          marker.bindPopup(`<h2>${dat.city}</h2>`, { maxWidth: 150, closeButton: false }).openPopup()
-
-        })
+    <!-- Compiled and minified CSS -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <!-- Compiled and minified JavaScript -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
 
 
-
-        var before = null;
-        requestAnimationFrame(function animate(now) {
-            var c = earth.getPosition();
-            var elapsed = before? now - before: 0;
-            before = now;
-            earth.setCenter([c[0], c[1] + 0.1*(elapsed/60)]);
-            requestAnimationFrame(animate);
-        });
-      }
-    </script>
-    <style>
-      html, body{padding: 0; margin: 0;}
-      #earth_div{top: 0; right: 0; bottom: 0; left: 0;
-                 background-color:rgba(49, 49, 65, 1); position: absolute !important;}
-
-      h1 {
-        font-family: Raleway;
-        font-weight: 100;
-        position: fixed;
-        z-index: 1000;
-        font-family: 'Open Sans', sans-serif;
-        color: white;
-        font-size: 40px;
-        left: 35%;
-        top: 10%;
-        width: 260px;
-        height: 200px;
-      }
-
-      i {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .rotate {
-        position: absolute;
-        transform: rotate(22.5deg);
-        font-style: normal;
-      }
-
-      .rotate-2 {
-        position: absolute;
-        transform: rotate(22.5deg);
-        font-style: normal;
-        top: 60px;
-      }
-
-      .rotate-3 {
-        position: absolute;
-        transform: rotate(22.5deg);
-        font-style: normal;
-        top: 120px;
-      }
-
-      .rotate-4 {
-        position: absolute;
-        font-style: normal;
-        top: 180px;
-        font-size: 8px;
-        letter-spacing: 3px;
-      }
-
-      .rotate:hover, .rotate-2:hover, .rotate-3:hover {
-        transform: rotate(0deg);
-        transition: .5s all ease-in-out;
-        cursor: default;
-      }
-
-
-      h2 {
-        font-family: Raleway;
-        color: white;
-        margin: 0;
-        font-size: 14px;
-        letter-spacing: 4px;
-      }
-
-      .we-pp-wrapper {
-        background: none;
-        box-shadow: none;
-      }
-
-      .we-pp-content {
-        margin: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-      }
-
-      .we-pp-tip-cont {
-        display: none;
-      }
-
-      .we-pm-icon {
-        width: 8px !important;
-        height: 8px !important;
-        background-repeat: no-repeat;
-        background-size: contain;
-      }
-
-
-      </style>
-    </head>
-    <body onload="initialize()">
+    <link href="./styles/styles.css" rel="stylesheet">
+  </head>
+    <body>
       <div id="earth_div"></div>
-      <h1>
+      <div class="audioDevices">
+        <div class="select selectInput">
+          <i class="material-icons micAudio">mic</i>
+          <select id="audioSource">
+            <option value="" disabled selected>Audio input source</option>
+          </select>
+        </div>
+        <div class="select selectOutput">
+          <i class="material-icons micAudio">headset</i>
+          <select id="audioOutput">
+            <option value="" disabled selected>Audio Output source</option>
+          </select>
+        </div>  
+      </div>
+      <h1 class="mainHeader">
         <i class='rotate'>A</i>
         <i class='rotate' style='left: 45px;'>R</i>
         <i class='rotate' style='left: 90px;'>O</i>
@@ -167,5 +56,15 @@
 
         <i class='rotate-4'>Live ASMR Streaming Service</i>
       </h1>
+      
+      <script src="http://www.webglearth.com/v2/api.js"></script>
+      <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+      <script src="./scripts/main/earth.js"></script>
+      <script src="./scripts/main/webrtc.js"></script>
+      <script src="./scripts/main/socket.io.js"></script>
+      <script src="./scripts/main/socket.io.helper.js"></script>
+
+      <script src="./scripts/main/main.js"></script>
+      
   </body>
 </html>

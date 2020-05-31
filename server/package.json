@@ -1,12 +1,13 @@
 {
-  "name": "filesystem",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
-    "simple-http-file-server": "^1.0.1"
+    "simple-http-file-server": "^1.0.1",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {},
   "scripts": {
