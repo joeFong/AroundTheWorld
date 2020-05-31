@@ -11,39 +11,11 @@ const selectors = [audioInputSelect, audioOutputSelect];
 const audio = document.querySelector('audio');
 
 
-audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
-
-function changeAudioDestination() {
-    const audioDestination = audioOutputSelect.value;
-    attachSinkId(videoElement, audioDestination);
-}
-
-// Attach audio output device to video element using device/sink ID.
-function attachSinkId(element, sinkId) {
-    if (typeof element.sinkId !== 'undefined') {
-      element.setSinkId(sinkId)
-          .then(() => {
-            console.log(`Success, audio output device attached: ${sinkId}`);
-          })
-          .catch(error => {
-            let errorMessage = error;
-            if (error.name === 'SecurityError') {
-              errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
-            }
-            // Jump back to first output device in the list as it's the default.
-            audioOutputSelect.selectedIndex = 0;
-          });
-    } else {
-      console.warn('Browser does not support output device selection.');
-    }
-}
-
 function gotStream(stream) {
     window.stream = stream; // make stream available to console
     // Refresh button list in case labels have become available
     return navigator.mediaDevices.enumerateDevices();
 }
-
 
 function gotDevices(deviceInfos) {
   // Handles being called several times to update labels. Preserve values.

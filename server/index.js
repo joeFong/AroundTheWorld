@@ -43,6 +43,6 @@ io.on('connection', (socket) => {
 app.use(express.static(__dirname + '/public'));
 app.listen(port);
 
-// http.listen(socketPort, () => {
-//   console.log(`listening on *:${socketPort}`);
-// });
+http.listen(socketPort, () => {
+  console.log(`listening on *:${socketPort}`);
+});
