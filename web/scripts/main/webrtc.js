@@ -89,7 +89,7 @@ const initUserMedia = (e) => {
             audio: true,
             video: false
         };
-        const stream = navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess);
+        // const stream = navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess);
     } catch (e) {
         handleError(e);
     }

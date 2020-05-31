@@ -1,29 +1,83 @@
 const data = [
     {
-      city: 'New York',
-      lat: 40.7128,
-      lon: 74.0060
+        city: 'Seoul',
+        lat: 37.5665,
+        lon: 126.9780
     },
     {
-      city: 'Seoul',
-      lat: 37.5665,
-      lon: 126.9780
+        city: 'Hong Kong',
+        lat: 22.3193,
+        lon: 114.1694
     },
     {
-      city: 'Hong Kong',
-      lat: 22.3193,
-      lon: 114.1694
+        city: 'London',
+        lat: 51.5074,
+        lon: 0.1278
     },
     {
-      city: 'London',
-      lat: 51.5074,
-      lon: 0.1278
+        city: 'Tokyo',
+        lat: 35.40,
+        lon: 139.45
+    },
+    {
+        city: 'Berlin',
+        lat: 52.5200,
+        lon: 13.4050
+    },
+    {
+        city: 'Paris',
+        lat: 48.8566,
+        lon: 2.3522
+    },
+    {
+        city: 'Beijing',
+        lat: 39.9042,
+        lon: 116.4074
+    },
+    {
+        city: 'Copenhagen',
+        lat: 55.6761,
+        lon: 12.5683
+    },
+    {
+        city: 'Stockholm',
+        lat: 59.3293,
+        lon: 18.0686
+    },
+    {
+        city: 'Rio de Janeiro',
+        lat: 22.9068,
+        lon: 43.1729
+    },
+    {
+        city: 'Mexico City',
+        lat: 19.4326,
+        lon: 99.1332
+    },
+    {
+        city: 'Panama City',
+        lat: 8.9824,
+        lon: 79.5199
+    },
+    {
+        city: 'Budapest',
+        lat: 47.4979,
+        lon: 19.0402
+    },
+    {
+        city: 'Cope Town',
+        lat: 33.9249,
+        lon: 18.4241
     },
 ];
+
+var currentBegin = 0;
+var currentEnd = 5;
 
 const Earth = {
     createGlobe: () => {
         var earth = new WE.map('earth_div');
+        var cities = [];
 
         WE.tileLayer('https://api.maptiler.com/maps/88a761b9-cca7-40a1-9d1a-cce662408371/{z}/{x}/{y}.png?key=J16kC7Zjej5UcrO1DsLF', {
             minZoom: 0,
@@ -31,17 +85,47 @@ const Earth = {
             attribution: 'NASA'
         }).addTo(earth);
 
-        data.map((dat, key) => {
-            var marker = WE.marker([dat.lat, dat.lon], './assets/Ellipse.png', 14, 14).addTo(earth)
-            marker.bindPopup(`<h2 id='marker-${key}'>${dat.city}</h2>`, { maxWidth: 150, closeButton: false }).openPopup()
-        })
-
-
-
         let i = 0
+        let count = 1;
+
+        let currentMarkers = []; 
         const increment = () => {
+
             i = (i + 1) % data.length
 
+            if(count >= cities.length) {
+                count = 1;
+                currentBegin = 0;
+                currentEnd = 5;
+            }
+
+            if(!cities.length) {
+                cities = data.slice(0, 5);
+                cities.map((dat, key) => {
+                    var marker = WE.marker([dat.lat, dat.lon], './assets/Ellipse.png', 14, 14).addTo(earth)
+                    marker.bindPopup(`<h2 id='marker-${key}'>${dat.city}</h2>`, { maxWidth: 150, closeButton: false }).openPopup()
+                    currentMarkers.push(marker);
+                })
+            }
+
+            if(count++ % 3 === 0) {
+                currentBegin = i
+                currentEnd = i + 5;
+
+                cities = data.slice(currentBegin, currentEnd);
+
+                currentMarkers.map((marker) => {
+                    marker.removeFrom(earth);
+                })
+                currentMarkers = []
+
+                cities.map((dat, key) => {
+                    var marker = WE.marker([dat.lat, dat.lon], './assets/Ellipse.png', 14, 14).addTo(earth)
+                    marker.bindPopup(`<h2 id='marker-${key}'>${dat.city}</h2>`, { maxWidth: 150, closeButton: false }).openPopup()
+                    currentMarkers.push(marker);
+                })
+            }
+            
             earth.panTo([ data[i].lat, data[i].lon ])
         }
 
@@ -51,13 +135,14 @@ const Earth = {
         // playHeadInfo.innerText = data[0].city
 
         var before = null;
+
         requestAnimationFrame(function animate(now) {
             const playHeadInfo = document.getElementById('playhead-info')
             var c = earth.getPosition();
             var elapsed = before? now - before: 0;
             before = now;
 
-            data.map(({ city, lat, lon }, key) => {
+            cities.map(({ city, lat, lon }, key) => {
                 const near = [lat/c[0], lon/c[1]]
                 const markerText = document.getElementById(`marker-${key}`)
 
