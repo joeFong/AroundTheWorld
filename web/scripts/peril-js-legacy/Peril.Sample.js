@@ -1,4 +1,4 @@
-// Peril.js 
+// Peril.js
 // Library for Web Audio API
 // Developed by Min Nam
 // jabuem.co
@@ -20,7 +20,7 @@ Sample.prototype.init = function(){
 
   this.request.onload = function() {
     AC.decodeAudioData(self.request.response, function(sample) {
-      self.sample = sample;        
+      self.sample = sample;
     });
   }
 
@@ -31,12 +31,12 @@ Sample.prototype.init = function(){
   this.request.onloadstart = function() {
     self.completedPercentage = 0;
   };
-  
+
   this.request.send();
 }
 
 var Simpler = function(url, level, rate, auto){
-  this.url          = url;  
+  this.url          = url;
   this.level        = level;
   this.playbackRate = rate;
   this.auto         = auto;
@@ -58,10 +58,12 @@ Simpler.prototype.init = function(){
 
   this.output = AC.createGain();
   this.output.gain.value = this.level;
-  
+
   this.request.onload = function() {
     AC.decodeAudioData(self.request.response, function(sample) {
       self.sample = sample;
+
+      console.log('uploaded')
 
       if(self.auto){
         self.play();
@@ -75,16 +77,21 @@ Simpler.prototype.init = function(){
   this.request.onloadstart = function() {
     self.completedPercentage = 0;
   };
-  
+
   this.request.send();
 }
 
 Simpler.prototype.play = function(){
-    this.simpler                    = AC.createBufferSource(); 
+    this.simpler                    = AC.createBufferSource();
     this.simpler.playbackRate.value = this.playbackRate;
-    this.simpler.buffer             = this.sample;                   
+    this.simpler.buffer             = this.sample;
     this.simpler.connect(this.output);
-    this.simpler.start(0); 
+    this.simpler.start(0);
+}
+
+Simpler.prototype.stop = function(){
+  console.log(this.simpler)
+    this.simpler.stop(0);
 }
 
 Simpler.prototype.setOutput = function(){
