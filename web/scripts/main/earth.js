@@ -125,14 +125,14 @@ const Earth = {
                     currentMarkers.push(marker);
                 })
             }
-            
-            earth.panTo([ data[i].lat, data[i].lon ])
+            setTimeout(() => {
+                earth.panTo([ data[i].lat, data[i].lon ])
+            }, 300)
         }
 
         setInterval(increment, 10000)
         increment()
         earth.setView([data[0].lat, data[0].lon], 4.5);
-        // playHeadInfo.innerText = data[0].city
 
         var before = null;
 
