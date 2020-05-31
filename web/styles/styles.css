@@ -1,21 +1,23 @@
 html, body{
-    padding: 0; 
+    padding: 0;
     margin: 0;
     width: 100%;
 }
 
 #earth_div{
     top: 0;
-    right: 0; 
-    bottom: 0; 
+    right: 0;
+    bottom: 0;
     left: 0;
     background-color:rgba(49, 49, 65, 1);
     position: absolute !important;
 }
 
 .audioDevices {
-    position: relative;
+    position: fixed;
     width: 100%;
+    bottom: 120px;
+    z-index: 1000;
 }
 
 .micAudio {
@@ -68,16 +70,16 @@ html, body{
     font-family: 'Open Sans', sans-serif;
     color: white;
     font-size: 40px;
-    left: 35%;
+    left: 20%;
     top: 10%;
     width: 260px;
     height: 200px;
 }
 
 i {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
 .rotate {
@@ -116,33 +118,59 @@ cursor: default;
 
 
 h2 {
-font-family: Raleway;
-color: white;
-margin: 0;
-font-size: 14px;
-letter-spacing: 4px;
+    font-family: Raleway;
+    color: white;
+    margin: 0;
+    font-size: 14px;
+    letter-spacing: 4px;
+}
+
+.we-pp {
+    opacity: 1 !important;
+    visibility: visible !important;
+    user-select: none;
 }
 
 .we-pp-wrapper {
-background: none;
-box-shadow: none;
+    background: none !important;
+    box-shadow: none!important;
 }
 
 .we-pp-content {
-margin: 0;
-display: flex;
-align-items: center;
-justify-content: center;
-
+    margin: 0 0 8px 0 !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
 }
 
 .we-pp-tip-cont {
-display: none;
+    display: none;
 }
 
 .we-pm-icon {
-width: 8px !important;
-height: 8px !important;
-background-repeat: no-repeat;
-background-size: contain;
+    width: 8px;
+    height: 8px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    filter: grayscale(100%);
+    opacity: 0.5;
+    transition: .5s all ease-in-out;
+}
+
+
+#nav {
+    position: fixed;
+    z-index: 1000;
+    bottom: 16%;
+    left: 50%;
+    min-width: 400px;
+    width: 50%;
+    transform: translateX(-50%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+}
+
+#playhead-info {
+    font-size: 20px;
 }

@@ -97,21 +97,21 @@ const initUserMedia = (e) => {
 
 initUserMedia();
 
-
-
 function handleSuccess(stream) {
     window.stream = stream; // make variable available to browser console
     const audioTracks = stream.getAudioTracks();
 
     const soundMeter = window.soundMeter = new SoundMeter(window.audioContext);
+
+    window.audioContext.resume() 
     soundMeter.connectToSource(stream, function(e) {
         if (e) {
           alert(e);
           return;
         }
-        setInterval(() => {
-            console.log(soundMeter.instant.toFixed(2), soundMeter.clip, soundMeter.slow);
-        }, 200);
+        // setInterval(() => {
+        //     console.log(soundMeter.instant.toFixed(2), soundMeter.clip, soundMeter.slow);
+        // }, 200);
     });
     audio.srcObject = stream;
     console.log('Got stream with constraints:', constraints);
