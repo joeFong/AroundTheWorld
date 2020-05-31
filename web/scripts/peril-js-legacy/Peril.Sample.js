@@ -63,8 +63,6 @@ Simpler.prototype.init = function(){
     AC.decodeAudioData(self.request.response, function(sample) {
       self.sample = sample;
 
-      console.log('uploaded')
-
       if(self.auto){
         self.play();
       }
@@ -90,8 +88,9 @@ Simpler.prototype.play = function(){
 }
 
 Simpler.prototype.stop = function(){
-  console.log(this.simpler)
+  if (this.simpler) {
     this.simpler.stop(0);
+  }
 }
 
 Simpler.prototype.setOutput = function(){
