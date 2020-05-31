@@ -5,7 +5,18 @@ const audioSource = audioInputSelect.value;
 const constraints = {
     audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
 };
+
 const selectors = [audioInputSelect, audioOutputSelect];
+
+const audio = document.querySelector('audio');
+
+
+try {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    window.audioContext = new AudioContext();
+} catch (e) {
+    alert('Web Audio API not supported.');
+}
 
 audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
@@ -69,21 +80,40 @@ function gotDevices(deviceInfos) {
     });
   }
 
-navigator.mediaDevices.enumerateDevices().then(gotStream).then(gotDevices).catch(handleError);
+// navigator.mediaDevices.enumerateDevices().then(gotStream).then(gotDevices).catch(handleError);
 
-const WebRTC = { 
-    initUserMedia: async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia(constraints);
-            handleSuccess(stream);
-            e.target.disabled = true;
-        } catch (e) {
-            handleError(e);
-        }
+
+const initUserMedia = (e) => {
+    try {
+        const constraints = window.constraints = {
+            audio: true,
+            video: false
+        };
+        const stream = navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess);
+    } catch (e) {
+        handleError(e);
     }
 }
 
+initUserMedia();
+
+
+
 function handleSuccess(stream) {
+    window.stream = stream; // make variable available to browser console
+    const audioTracks = stream.getAudioTracks();
+
+    const soundMeter = window.soundMeter = new SoundMeter(window.audioContext);
+    soundMeter.connectToSource(stream, function(e) {
+        if (e) {
+          alert(e);
+          return;
+        }
+        setInterval(() => {
+            console.log(soundMeter.instant.toFixed(2), soundMeter.clip, soundMeter.slow);
+        }, 200);
+    });
+    audio.srcObject = stream;
     console.log('Got stream with constraints:', constraints);
   }
 

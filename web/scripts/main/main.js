@@ -1,5 +1,5 @@
 window.onload = async () => {
-    // $('select').formSelect();
+    $('select').formSelect();
 
     Earth.createGlobe();
 }

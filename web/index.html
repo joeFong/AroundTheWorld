@@ -12,15 +12,19 @@
      </script>
 
     <!-- Compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <!-- Compiled and minified JavaScript -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 
     <link href="./styles/styles.css" rel="stylesheet">
   </head>
     <body>
       <div id="earth_div"></div>
+
+      <audio id="gum-local" class="select" controls autoplay></audio>
+
+
       <div class="audioDevices">
         <div class="select selectInput">
           <i class="material-icons micAudio">mic</i>
@@ -59,6 +63,7 @@
       
       <script src="http://www.webglearth.com/v2/api.js"></script>
       <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+      <script src="./scripts/main/soundmeter.js"></script>
       <script src="./scripts/main/earth.js"></script>
       <script src="./scripts/main/webrtc.js"></script>
       <script src="./scripts/main/socket.io.js"></script>
