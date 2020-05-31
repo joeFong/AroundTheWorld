@@ -140,7 +140,10 @@ var Scope = function(context){
 			// }
 
 			for (var i = 0; i < 5; i ++) {
-				let rectHeight = (freqData[parseInt((freqData.length/5) * i)] / 128 * (HEIGHT / 2) )
+				let rectHeight = ((freqData[parseInt((freqData.length/5) * i)] / 128))
+
+				console.log(rectHeight)
+
 				ctx.rect(i ? (WIDTH / 5) * i : 0, rectHeight / 2, (WIDTH / 5) - 20, rectHeight / 2)
 			}
 
