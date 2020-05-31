@@ -11,13 +11,6 @@ const selectors = [audioInputSelect, audioOutputSelect];
 const audio = document.querySelector('audio');
 
 
-try {
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    window.audioContext = new AudioContext();
-} catch (e) {
-    alert('Web Audio API not supported.');
-}
-
 audioOutputSelect.disabled = !('sinkId' in HTMLMediaElement.prototype);
 
 function changeAudioDestination() {

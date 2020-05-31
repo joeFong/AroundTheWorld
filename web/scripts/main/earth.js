@@ -2,47 +2,56 @@ const data = [
     {
         city: 'Seoul',
         lat: 37.5665,
-        lon: 126.9780
+        lon: 126.9780,
+        url: 'http://localhost:4000/sound/1.mp3'
     },
     {
         city: 'Hong Kong',
         lat: 22.3193,
-        lon: 114.1694
+        lon: 114.1694,
+        url: 'http://localhost:4000/sound/2.mp3'
     },
     {
         city: 'London',
         lat: 51.5074,
-        lon: 0.1278
+        lon: 0.1278,
+        url: 'http://localhost:4000/sound/3.mp3'
     },
     {
         city: 'Tokyo',
         lat: 35.40,
-        lon: 139.45
+        lon: 139.45,
+        url: 'http://localhost:4000/sound/4.mp3'
     },
     {
         city: 'Berlin',
         lat: 52.5200,
-        lon: 13.4050
+        lon: 13.4050,
+        url: 'http://localhost:4000/sound/5.mp3'
     },
     {
         city: 'Paris',
         lat: 48.8566,
-        lon: 2.3522
+        lon: 2.3522,
+        url: 'http://localhost:4000/sound/6.mp3'
     },
     {
         city: 'Beijing',
         lat: 39.9042,
-        lon: 116.4074
+        lon: 116.4074,
+        url: 'http://localhost:4000/sound/7.mp3'
     },
     {
         city: 'Copenhagen',
         lat: 55.6761,
-        lon: 12.5683
+        lon: 12.5683,
+        url: 'http://localhost:4000/sound/8.mp3'
     },
     {
         city: 'Stockholm',
         lat: 59.3293,
-        lon: 18.0686
+        lon: 18.0686,
+        url: 'http://localhost:4000/sound/9.mp3'
     },
     {
         city: 'Rio de Janeiro',
@@ -76,6 +85,7 @@ var currentEnd = 5;
 
 let animation = null
 let increment = null
+
 const Earth = {
     createGlobe: () => {
         var earth = new WE.map('earth_div');
@@ -142,12 +152,23 @@ const Earth = {
                         markerEl.style.height = '12px'
                         markerEl.style.marginLeft = '-6px'
                         playHeadInfo.innerText = $(markerEl).find('h2')[0].innerText
+                        if (cities[key].url) {
+                            if (window.sample) {
+                                window.sample.stop()
+                            }
+                            window.sample = new Simpler(cities[key].url,1, 1, true)
+                            window.sample.setOutput(AC.destination)
+                        }
                     } else {
                         markerEl.style.filter = 'grayscale(100%)'
                         markerEl.style.opacity = 0.5
                         markerEl.style.width = '8px'
                         markerEl.style.height = '8px'
                         markerEl.style.marginLeft = '-4px'
+
+                        if (window.sample) {
+                            window.sample.stop()
+                        }
                     }
                 })
 
@@ -156,7 +177,6 @@ const Earth = {
         }
 
         animation = setInterval(increment, 10000)
-        increment()
         earth.setView([data[0].lat, data[0].lon], 4.5);
 
         var before = null;
@@ -202,5 +222,8 @@ const Earth = {
         animation = setInterval(increment, 10000)
         $('#playhead-pause').show();
         $('#playhead-play').hide();
+        window.sample = new Simpler('http://localhost:4000/sound/1.mp3',1, 1, true)
+        window.sample.setOutput(AC.destination)
+        window.sample.play();
     },
 }
