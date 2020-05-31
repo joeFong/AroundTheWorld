@@ -53,76 +53,34 @@ function gotStream(stream) {
 
 
 function gotDevices(deviceInfos) {
-    // Handles being called several times to update labels. Preserve values.
-    const values = selectors.map(select => select.value);
-    selectors.forEach(select => {
-      while (select.firstChild) {
-        select.removeChild(select.firstChild);
-      }
-    });
-    for (let i = 0; i !== deviceInfos.length; ++i) {
-      const deviceInfo = deviceInfos[i];
-      const option = document.createElement('option');
-      option.value = deviceInfo.deviceId;
-      if (deviceInfo.kind === 'audioinput') {
-        option.text = deviceInfo.label || `microphone ${audioInputSelect.length + 1}`;
-        audioInputSelect.appendChild(option);
-      } else if (deviceInfo.kind === 'audiooutput') {
-        option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
-        audioOutputSelect.appendChild(option);
-      }
+  // Handles being called several times to update labels. Preserve values.
+  const values = selectors.map(select => select.value);
+  selectors.forEach(select => {
+    while (select.firstChild) {
+      select.removeChild(select.firstChild);
     }
-    selectors.forEach((select, selectorIndex) => {
-      if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
-        select.value = values[selectorIndex];
-      }
-    });
+  });
+  for (let i = 0; i !== deviceInfos.length; ++i) {
+    const deviceInfo = deviceInfos[i];
+    const option = document.createElement('option');
+    option.value = deviceInfo.deviceId;
+    if (deviceInfo.kind === 'audioinput') {
+      option.text = deviceInfo.label || `microphone ${audioInputSelect.length + 1}`;
+      audioInputSelect.appendChild(option);
+    } else if (deviceInfo.kind === 'audiooutput') {
+      option.text = deviceInfo.label || `speaker ${audioOutputSelect.length + 1}`;
+      audioOutputSelect.appendChild(option);
+    }
   }
-
-navigator.mediaDevices.enumerateDevices().then(gotStream).then(gotDevices).catch(handleError);
-
-
-const initUserMedia = (e) => {
-    try {
-        const constraints = window.constraints = {
-            audio: true,
-            video: false
-        };
-        const stream = navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess);
-    } catch (e) {
-        handleError(e);
+  selectors.forEach((select, selectorIndex) => {
+    if (Array.prototype.slice.call(select.childNodes).some(n => n.value === values[selectorIndex])) {
+      select.value = values[selectorIndex];
     }
+  });
 }
-
-initUserMedia();
-
-function handleSuccess(stream) {
-    window.stream = stream; // make variable available to browser console
-    const audioTracks = stream.getAudioTracks();
-
-    var scope1 = new Scope(window.audioContext)
-    // scope1.connect(window.audioContext.destination)
-
-    this.mic = window.audioContext.createMediaStreamSource(stream)
-    this.mic.connect(scope1)
-
-    const soundMeter = window.soundMeter = new SoundMeter(window.audioContext);
-
-    window.audioContext.resume()
-    soundMeter.connectToSource(stream, function(e) {
-        if (e) {
-          alert(e);
-          return;
-        }
-        setInterval(() => {
-            console.log(soundMeter.instant.toFixed(2), soundMeter.clip, soundMeter.slow);
-        }, 200);
-    });
-    audio.srcObject = stream;
-    console.log('Got stream with constraints:', constraints);
-  }
 
 function handleError(error) {
-    console.log(error);
-    alert(`Error error: ${error.name}`, error);
+  console.log(error);
+  alert(`Error error: ${error.name}`, error);
 }
+navigator.mediaDevices.enumerateDevices().then(gotStream).then(gotDevices).catch(handleError);

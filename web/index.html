@@ -46,13 +46,15 @@
 
           <i class='rotate-4'>Live ASMR Streaming Service</i>
         </h1>
+
         <button id='stream-button'></button>
+        
         <div id='nav'>
           <h2 id='playhead-tags'>
             <a>#city</a>
             <a>#cafe</a>
           </h2>
-          <h2 id='playhead-info'>New York</h2>
+          <h2 id='playhead-info'> --- </h2>
           <div id='playhead-buttons'>
             <button class='playhead-buttons'><i class="material-icons">keyboard_arrow_left</i></button>
             <button  class='playhead-buttons' id='playhead-play' onClick='Earth.play()' style='display: none;'><i class="material-icons">play_arrow</i></button>
@@ -62,15 +64,15 @@
         </div>
       </div>
 
-      <div class="container">
+      <!-- <div class="container">
         <video class="video-large" autoplay></video>
         <div class="users-container" id="users-container">
             <h4>Users</h4>
             <div id="users"></div>
         </div>
-      <div>
+      <div> -->
 
-      <!-- <div class="audioDevices">
+      <div class="audioDevices">
         <div class="select selectInput">
           <i class="material-icons micAudio">mic</i>
           <select id="audioSource">
@@ -83,7 +85,7 @@
             <option value="" disabled selected>Audio Output source</option>
           </select>
         </div>
-      </div> -->
+      </div>
 
       <script src="http://www.webglearth.com/v2/api.js"></script>
       <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>

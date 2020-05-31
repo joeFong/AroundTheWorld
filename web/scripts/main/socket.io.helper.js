@@ -24,10 +24,59 @@ var pc = new peerConnection({
     }]
 });
 
+let stream; 
+let toggle = 0;
+
+const initUserMedia = (e) => {
+    try {
+        const constraints = window.constraints = {
+            audio: true,
+            video: false
+        };
+        
+        if(!stream) {
+            stream = navigator.mediaDevices.getUserMedia(constraints).then(handleSuccess);
+        }
+
+        if(toggle++ % 2 === 0) {
+            window.audioContext.resume()
+        } else {
+            window.audioContext.suspend()
+            toggle = 0;
+        }
+
+    } catch (e) {
+        handleError(e);
+    }
+}
+
+document.getElementById('stream-button').addEventListener('click', (event) => {
+    socket.emit('add-users', {
+        users: [socket.id]
+    });
+    initUserMedia();
+})
+
+function handleSuccess(stream) {
+    window.stream = stream; // make variable available to browser console
+
+    var scope = new Scope(window.audioContext)
+    scope.connect(window.audioContext.destination)
+
+    this.mic = window.audioContext.createMediaStreamSource(stream)
+    this.mic.connect(scope)
+
+    window.audioContext.resume()
+  }
+
+function handleError(error) {
+    console.log(error);
+    alert(`Error error: ${error.name}`, error);
+}
+
 socket.on('add-users', function (data) {
-    console.log(data);
     for (var i = 0; i < data.users.length; i++) {
-        consoler.log(data.users[i]);
+        console.log(data.users[i]);
     }
 });
 
@@ -59,21 +108,6 @@ socket.on('answer-made', function (data) {
         }
     }, error);
 });
-
-// pc.onaddstream = function (obj) {
-//     var vid = document.createElement('video');
-//     vid.setAttribute('class', 'video-small');
-//     vid.setAttribute('autoplay', 'autoplay');
-//     vid.setAttribute('id', 'video-small');
-//     document.getElementById('users-container').appendChild(vid);
-//     vid.srcObject = obj.stream;
-// }
-
-// navigator.getUserMedia({video: true, audio: true}, function (stream) {
-//     var video = document.querySelector('video');
-//     video.srcObject = stream;
-//     pc.addStream(stream);
-// }, error);
 
 function createOffer(id) {
     pc.createOffer(function (offer) {

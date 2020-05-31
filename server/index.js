@@ -14,8 +14,12 @@ app.use(cors());
 app.options('*', cors());
 
 io.on('connection', (socket) => {
-  socket.broadcast.emit('add-users', {
-    users: [socket.id]
+  // socket.emit('add-users', {
+  //   users: [socket.id]
+  // });
+
+  socket.on('add-users', (data) => {
+    console.log(data);
   });
 
   socket.on('make-offer', function (data) {
@@ -33,8 +37,8 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    this.socketsArray.splice(this.socketsArray.indexOf(socket.id), 1);
-    this.io.emit('remove-user', socket.id);
+    socketsArray.splice(socketsArray.indexOf(socket.id), 1);
+    // io.emit('remove-user', socket.id);
   });
   
 });
