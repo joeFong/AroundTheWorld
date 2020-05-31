@@ -216,8 +216,18 @@ h2 {
     background: #fd4c4c;
     border: none;
     right: 0;
-    top: 0;
+    top: 15px;
     transition: .1s all ease-in-out;
+}
+
+#stream-label {
+    display: none;
+    font-family: 'Open Sans', sans-serif;
+    position: absolute;
+    color: white;
+    right: 35px;
+    top: 15px;
+    margin: 0px 0px 0px 0px;
 }
 
 #stream-button:hover:active {

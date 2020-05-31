@@ -50,12 +50,26 @@ const initUserMedia = (e) => {
     }
 }
 
+const initUserLocation = (e) => {
+    if(!navigator.geolocation) {
+        return alert('Geolocation is not supported by your browser.')
+    }
+    navigator.geolocation.getCurrentPosition(async (success) => {
+        const response = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${success.coords.latitude}&longitude=${success.coords.longitude}&localityLanguage=en`)
+        const responseJson = await response.json();
+        console.log(responseJson)
+        $('#stream-label').text(`Streaming out of ${responseJson.locality}, ${responseJson.principalSubdivision}, ${responseJson.countryCode}`)
+        $('#stream-label').fadeIn();
+    });
+} 
+
 document.getElementById('stream-button').addEventListener('click', (event) => {
     socket.emit('add-users', {
         users: [socket.id]
     });
     
     initUserMedia();
+    initUserLocation();
 })
 
 function handleSuccess(stream) {

@@ -123,6 +123,7 @@ const Earth = {
                 currentMarkers.map((marker) => {
                     marker.removeFrom(earth);
                 })
+
                 currentMarkers = []
 
                 cities.map((dat, key) => {
@@ -157,7 +158,7 @@ const Earth = {
                         }
 
                         cities[key].url.setOutput(AC.destination)
-                        cities[key].url.play()
+                        // cities[key].url.play()
                     } else {
                         markerEl.style.filter = 'grayscale(100%)'
                         markerEl.style.opacity = 0.5
@@ -217,7 +218,7 @@ const Earth = {
         animation = setInterval(increment, 10000)
         $('#playhead-pause').show();
         $('#playhead-play').hide();
-        data[0].url.setOutput(AC.destination)
-        data[0].url.play()
+        // data[0].url.setOutput(AC.destination)
+        // data[0].url.play()
     },
 }
