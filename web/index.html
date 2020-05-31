@@ -37,16 +37,26 @@
 
         })
 
+        let i = 0
+        const increment = () => {
+          i = (i + 1) % data.length
+
+          earth.panTo([ data[i].lat, data[i].lon ])
+        }
+
+        setInterval(increment, 5000)
+        increment()
 
 
-        var before = null;
-        requestAnimationFrame(function animate(now) {
-            var c = earth.getPosition();
-            var elapsed = before? now - before: 0;
-            before = now;
-            earth.setCenter([c[0], c[1] + 0.1*(elapsed/60)]);
-            requestAnimationFrame(animate);
-        });
+
+        // var before = null;
+        // requestAnimationFrame(function animate(now) {
+        //     var c = earth.getPosition();
+        //     var elapsed = before? now - before: 0;
+        //     before = now;
+        //     earth.setCenter([c[0], c[1] + 0.1*(elapsed/60)]);
+        //     requestAnimationFrame(animate);
+        // });
       }
     </script>
     <style>
@@ -147,18 +157,18 @@
     <body onload="initialize()">
       <div id="earth_div"></div>
       <h1>
-        <i class='rotate'>A</i>
+        <i class='rotate' style='font-style: italic; transform: rotate(0);'>A</i>
         <i class='rotate' style='left: 45px;'>R</i>
         <i class='rotate' style='left: 90px;'>O</i>
         <i class='rotate' style='left: 135px;'>U</i>
         <i class='rotate' style='left: 180px;'>N</i>
         <i class='rotate' style='left: 225px;'>D</i>
 
-        <i class='rotate-2'>T</i>
+        <i class='rotate-2' style='font-style: italic; transform: rotate(0);'>T</i>
         <i class='rotate-2' style='left: 45px;'>H</i>
         <i class='rotate-2' style='left: 90px;'>E</i>
 
-        <i class='rotate-3'>W</i>
+        <i class='rotate-3' style='font-style: italic; transform: rotate(0);'>W</i>
         <i class='rotate-3' style='left: 45px;'>O</i>
         <i class='rotate-3' style='left: 90px;'>R</i>
         <i class='rotate-3' style='left: 135px;'>L</i>
