@@ -14,9 +14,6 @@ app.use(cors());
 app.options('*', cors());
 
 io.on('connection', (socket) => {
-  // socket.emit('add-users', {
-  //   users: [socket.id]
-  // });
 
   socket.on('add-users', (data) => {
     console.log(data);

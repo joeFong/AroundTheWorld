@@ -54,6 +54,7 @@ document.getElementById('stream-button').addEventListener('click', (event) => {
     socket.emit('add-users', {
         users: [socket.id]
     });
+    
     initUserMedia();
 })
 
